@@ -1,0 +1,262 @@
+{
+	"info": {
+		"_postman_id": "1dd05899-4e29-4ee1-9ad8-4d4d4b966406",
+		"name": "my_colietion",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "test1",
+			"item": [
+				{
+					"name": "豆瓣音乐API",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "71267e71-e280-4d1b-9165-7b63159335ed",
+								"exec": [
+									"console.log('Request 1 Pre-request Script');",
+									"pm.environment.set(\"timestampHeader\", new Date());",
+									"pm.environment.set(\"q\", \"黑色毛衣\");",
+									"",
+									"var array = [1,2,3,4];",
+									"pm.environment.set(\"array\", JSON.stringify(array, null, 2));",
+									"",
+									"var obj = {",
+									"    a:[1,2,3,4], ",
+									"    b:{",
+									"        c:'val'}",
+									"};",
+									"pm.environment.set('obj', JSON.stringify(obj));",
+									"",
+									"pm.sendRequest(\"https://postman-echo.com/get\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "db1dec40-8c4b-4331-a1b1-980c335faabc",
+								"exec": [
+									"pm.test(\"检查响应体中是否包含一个字符串\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"黑色毛衣\");",
+									"});",
+									"",
+									"pm.test(\"检查响应体等于一个字符串\", function () {",
+									"    pm.response.to.have.body(\"response_body_string\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"说明文字/标题\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.musics[0].rating.numRaters).to.eql(252);",
+									"});",
+									"",
+									"pm.test(\"检查响应中包含某个header\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"检查响应时间，要求小于200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"检查接口响应Code为200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Code名称中包含某个字符串\", function () {",
+									"    pm.response.to.have.status(\"OK\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"要求Status Code符合某种条件\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,201,202]);",
+									"});",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "timestamp",
+								"value": "{{timestampHeader}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://api.douban.com/v2/music/search?q={{q}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"douban",
+								"com"
+							],
+							"path": [
+								"v2",
+								"music",
+								"search"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "{{q}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "0366ef6c-f184-4278-8965-9404f28adce9",
+						"type": "text/javascript",
+						"exec": [
+							"console.log('Folder 1 Pre-request Script')"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "854497d5-19ee-4001-8b92-6b8b7d9ec35f",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Postman-echo.com/get",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4aa97a0a-0597-4b22-892b-afe36db604b4",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "Postman-echo.com/get",
+					"host": [
+						"Postman-echo",
+						"com"
+					],
+					"path": [
+						"get"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://postman-echo.com/cookies",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8a1bd7cd-2257-46b0-8798-8718c766fb09",
+						"exec": [
+							"var schema = {",
+							"    cookies: {type: \"array\"}",
+							"   ",
+							"};",
+							"",
+							"var data2 = JSON.parse(responseBody);",
+							"",
+							"tests[\"标题/说明\"] = tv4.validate(data2, schema);",
+							"",
+							"console.log(pm.response.reason())",
+							"",
+							"console.log(pm.iterationData.toObject())"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://postman-echo.com/cookies?q=111",
+					"protocol": "https",
+					"host": [
+						"postman-echo",
+						"com"
+					],
+					"path": [
+						"cookies"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "111"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "531eb1a5-eba0-41ba-bf55-39f4c0845da5",
+				"type": "text/javascript",
+				"exec": [
+					"console.log('Collection Pre-request Script')"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "bc5849ce-d2fa-4ac1-b25b-04802b050a4e",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
